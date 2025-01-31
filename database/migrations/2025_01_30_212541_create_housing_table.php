@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('housing', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('Beneficiary_ID');
+            $table->string('city');
+            $table->string('street');
+            $table->string('building');
+            $table->string('nature_of_housing'); //طبيعة الاشغال
             $table->timestamps();
+
+            $table->foreign('Beneficiary_ID')->references('id')->on('beneficiaries')->onDelete('cascade');
+
         });
     }
 

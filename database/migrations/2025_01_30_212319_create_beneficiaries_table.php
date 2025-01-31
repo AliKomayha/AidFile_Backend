@@ -13,6 +13,26 @@ return new class extends Migration
     {
         Schema::create('beneficiaries', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('father_name');
+            $table->string('grandfather_name')->nullable();
+            $table->string('lastname');
+            $table->date('date_of_birth');
+            $table->string('mothers_name');
+            $table->string('social_status');     //الوضع الاجتماعي
+            $table->string('family_situation');   //الوضع العائلي
+            $table->string('health_status');        //الوضع الصحي
+            $table->string('number_place_of_registration');         // محل ورقم القيد
+            $table->string('nationality');      //الجنسية
+            $table->string('doctrine')->nullable();         //المذهب
+            $table->string('guarantor')->nullable();        //الجهة الضامنة
+            $table->string('political_affiliation');   //الانتماء السياسي
+            $table->string('lineage')->nullable();          //النسب
+            $table->string('academic_level')->nullable();    //المستوى التعليمي
+            $table->string('blood_type')->nullable();
+            $table->string('religious_commitment');   //الإلتزام الديني
+            $table->string('phone_number');
+            $table->string('second_phone')->nullable();
             $table->timestamps();
         });
     }
