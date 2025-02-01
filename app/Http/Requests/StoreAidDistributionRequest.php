@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBeneficiaryRequest extends FormRequest
+class StoreAidDistributionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,7 +12,7 @@ class StoreBeneficiaryRequest extends FormRequest
     public function authorize(): bool
     {
         return false;
-        //return in_array(auth()->user()->role, ['admin', 'master']);
+        //return in_array(auth()->user()->role, ['user', 'admin', 'master']);
     }
 
     /**
@@ -23,10 +23,11 @@ class StoreBeneficiaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:master,admin,user'
+            'Aid_ID' => 'required|exists:aids,id',
+            'Beneficiary_ID' => 'required|exists:beneficiaries,id',
+            'date_given' => 'required|date',
+            'unit_value' => 'required|numeric',
+            'amount' => 'required|numeric',
         ];
     }
 }
