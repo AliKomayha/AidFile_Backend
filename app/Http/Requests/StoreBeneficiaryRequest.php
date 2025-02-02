@@ -11,7 +11,7 @@ class StoreBeneficiaryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
         //return in_array(auth()->user()->role, ['admin', 'master']);
     }
 
@@ -24,9 +24,25 @@ class StoreBeneficiaryRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'role' => 'required|in:master,admin,user'
+        'father_name' => 'required|string',
+        'grandfather_name' => 'nullable|string',
+        'lastname' => 'required|string',
+        'date_of_birth' => 'required|date_format:Y-m-d',
+        'mothers_name' => 'required|string',
+        'social_status' => 'required|string',
+        'family_situation' => 'required|string',
+        'health_status' => 'required|string',
+        'number_place_of_registration' => 'required|string',
+        'nationality' => 'required|string',
+        'doctrine' => 'nullable|string',
+        'guarantor' => 'nullable|string',
+        'political_affiliation' => 'required|string',
+        'lineage' => 'nullable|string',
+        'academic_level' => 'nullable|string',
+        'blood_type' => 'nullable|string',
+        'religious_commitment' => 'required|string',
+        'phone_number' => 'required|string|unique:beneficiaries',
+        'second_phone' => 'nullable|string',
         ];
     }
 }

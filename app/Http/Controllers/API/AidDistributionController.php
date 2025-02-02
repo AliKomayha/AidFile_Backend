@@ -14,7 +14,8 @@ class AidDistributionController extends Controller
      */
     public function index()
     {
-        
+        $aidDistributions= AidDistribution::all();
+        return response()->json($aidDistributions);
     }
 
     /**

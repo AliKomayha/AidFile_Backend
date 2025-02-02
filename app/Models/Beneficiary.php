@@ -9,6 +9,8 @@ class Beneficiary extends Model
 {
     use HasFactory;
 
+    protected $table ='beneficiaries';
+    
     protected $fillable =[
         'name', 'father_name', 'grandfather_name', 'lastname', 
         'date_of_birth', 'mothers_name', 'social_status', 'family_situation',
