@@ -43,10 +43,10 @@ class BeneficiaryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreBeneficiaryRequest $request, string $id)
     {
         $beneficiary = Beneficiary::findOrFail($id);
-        $beneficiary->update($request->all());
+        $beneficiary->update($request->validated());
 
         return response()->json(['message' => 'Beneficiary updated successfully', 'data' => $beneficiary], 200);
     }

@@ -26,11 +26,11 @@ return new class extends Migration
             $table->string('nationality');      //الجنسية
             $table->string('doctrine')->nullable();         //المذهب
             $table->string('guarantor')->nullable();        //الجهة الضامنة
-            $table->string('political_affiliation');   //الانتماء السياسي
+            $table->string('political_affiliation')->nullable();   //الانتماء السياسي
             $table->string('lineage')->nullable();          //النسب
             $table->string('academic_level')->nullable();    //المستوى التعليمي
             $table->string('blood_type')->nullable();
-            $table->string('religious_commitment');   //الإلتزام الديني
+            $table->string('religious_commitment')->nullable();   //الإلتزام الديني
             $table->string('phone_number');
             $table->string('second_phone')->nullable();
             $table->timestamps();

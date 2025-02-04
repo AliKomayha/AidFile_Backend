@@ -23,7 +23,7 @@ class StoreBeneficiaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+        'name' => 'required|string',
         'father_name' => 'required|string',
         'grandfather_name' => 'nullable|string',
         'lastname' => 'required|string',
@@ -36,11 +36,11 @@ class StoreBeneficiaryRequest extends FormRequest
         'nationality' => 'required|string',
         'doctrine' => 'nullable|string',
         'guarantor' => 'nullable|string',
-        'political_affiliation' => 'required|string',
+        'political_affiliation' => 'nullable|string',
         'lineage' => 'nullable|string',
         'academic_level' => 'nullable|string',
         'blood_type' => 'nullable|string',
-        'religious_commitment' => 'required|string',
+        'religious_commitment' => 'nullable|string',
         'phone_number' => 'required|string|unique:beneficiaries',
         'second_phone' => 'nullable|string',
         ];
