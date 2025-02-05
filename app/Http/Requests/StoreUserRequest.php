@@ -11,8 +11,8 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
-        //return auth()-user()->role === 'master';
+        // return true;
+        return auth()->user()->role === 'master';
     }
 
     /**
@@ -24,8 +24,8 @@ class StoreUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'email' => 'email|unique:users',
-            'password' => 'nullable|required|min:8',
+            'email' => 'nullable|unique:users',
+            'password' => 'required|min:8',
             'role' => 'required|in:master,admin,user',
         ];
     }
