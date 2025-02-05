@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\BeneficiaryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/beneficiaries',[BeneficiaryController::class,'index']);
 Route::post('/beneficiaries',[BeneficiaryController::class,'store']);
 //Route::post('/beneficiaries',[BeneficiaryController::class,'show']);
+
+Route::middleware(['auth:sanctum', 'isMaster'])->group(function () {
+    Route::apiResource('users', UserController::class);
+});
