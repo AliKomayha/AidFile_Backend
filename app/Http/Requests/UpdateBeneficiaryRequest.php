@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBeneficiaryRequest extends FormRequest
+class UpdateBeneficiaryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-      return in_array(auth()->user()->role, ['admin', 'master']);
+        return in_array(auth()->user()->role, ['admin', 'master']);
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreBeneficiaryRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'name' => 'required|string',
+            'name' => 'required|string',
         'father_name' => 'required|string',
         'grandfather_name' => 'nullable|string',
         'lastname' => 'required|string',
@@ -40,7 +40,8 @@ class StoreBeneficiaryRequest extends FormRequest
         'academic_level' => 'nullable|string',
         'blood_type' => 'nullable|string',
         'religious_commitment' => 'nullable|string',
-        'phone_number' => 'required|string|unique:beneficiaries',
+        //'phone_number' => 'required|string|unique:beneficiaries',
+        'phone_number' => 'required|string|unique:beneficiaries,phone_number,' . $this->route('id'),
         'second_phone' => 'nullable|string',
         ];
     }

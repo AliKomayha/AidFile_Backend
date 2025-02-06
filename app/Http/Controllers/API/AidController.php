@@ -34,7 +34,9 @@ class AidController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $aid = Aid::findOrFail($id);
+
+        return response()->json($aid);
     }
 
     /**
@@ -42,7 +44,12 @@ class AidController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(['type' => 'required|string']);
+
+        $aid = Aid::findOrFail($id);
+        $aid->update($request->all());
+
+        return response()->json(['message' => 'Aid type updated successfully', 'data' => $aid], 200);
     }
 
     /**
@@ -50,6 +57,9 @@ class AidController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $aid = Aid::findOrFail($id);
+        $aid->delete();
+
+        return response()->json(['message' => 'Aid type deleted successfully']);
     }
 }

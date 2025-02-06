@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AidDistribution;
 use App\Http\Requests\StoreAidDistributionRequest;
+use App\Http\Requests\UpdateAidDistributionRequest;
 
 class AidDistributionController extends Controller
 {
@@ -33,15 +34,20 @@ class AidDistributionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $aidDistribution = AidDistribution::findOrFail($id);
+        
+        return response()->json($aidDistribution);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAidDistributionRequest $request, string $id)
     {
-        //
+        $aidDistribution = AidDistribution::findOrFail($id);
+        $aidDistribution->update($request->validated());
+
+        return response()->json(['message' => 'Aid distribution updated successfully', 'data' => $aidDistribution], 200);
     }
 
     /**
@@ -49,6 +55,9 @@ class AidDistributionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $aidDistribution = AidDistribution::findOrFail($id);
+        $aidDistribution->delete();
+
+        return response()->json(['message' => 'Aid distribution deleted successfully']);
     }
 }

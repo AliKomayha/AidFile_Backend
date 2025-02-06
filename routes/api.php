@@ -38,6 +38,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //users
 Route::get('/users', [UserController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/users', [UserController::class, 'store'])->middleware('auth:sanctum');
-Route::get('/users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum');
+//Route::get('/users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('auth:sanctum');
