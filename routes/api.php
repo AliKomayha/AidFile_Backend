@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BeneficiaryController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AidDistributionController;
+use App\Http\Controllers\API\AidController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,19 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //users
 Route::get('/users', [UserController::class, 'index'])->middleware('auth:sanctum');
 Route::post('/users', [UserController::class, 'store'])->middleware('auth:sanctum');
-//Route::get('/users/{id}', [UserController::class, 'show'])->middleware('auth:sanctum');
 Route::put('/users/{id}', [UserController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('auth:sanctum');
+
+//aid distributions
+Route::get('/aid-distributions', [AidDistributionController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/aid-distributions', [AidDistributionController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/aid-distributions/{id}', [AidDistributionController::class, 'show'])->middleware('auth:sanctum');
+Route::put('/aid-distributions/{id}', [AidDistributionController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/aid-distributions/{id}', [AidDistributionController::class, 'destroy'])->middleware('auth:sanctum');
+
+//aids
+Route::get('/aids', [AidController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/aids', [AidController::class, 'store'])->middleware('auth:sanctum');
+Route::put('/aids/{id}', [AidController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/aids/{id}', [AidController::class, 'destroy'])->middleware('auth:sanctum');
+

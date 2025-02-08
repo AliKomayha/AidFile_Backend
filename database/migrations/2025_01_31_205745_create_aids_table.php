@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('type');
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE beneficiaries CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+
     }
 
     /**

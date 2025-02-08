@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreign('Beneficiary_ID')->references('id')->on('beneficiaries')->onDelete('cascade');
 
         });
+        DB::statement("ALTER TABLE beneficiaries CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+
     }
 
     /**

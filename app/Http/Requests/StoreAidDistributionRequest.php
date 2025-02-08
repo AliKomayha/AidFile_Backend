@@ -11,8 +11,8 @@ class StoreAidDistributionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
-        //return in_array(auth()->user()->role, ['user', 'admin', 'master']);
+        //return false;
+        return in_array(auth()->user()->role, ['user', 'admin', 'master']);
     }
 
     /**
