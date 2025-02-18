@@ -9,6 +9,7 @@ class Work extends Model
 {
     use HasFactory;
 
+    protected $table ='work';
     protected $fillable = ['Beneficiary_ID', 'job_type', 'contract_type', 'monthly_income'];
 
     public function beneficiary()

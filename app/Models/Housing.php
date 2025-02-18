@@ -9,6 +9,8 @@ class Housing extends Model
 {
     use HasFactory;
 
+    protected $table = 'housing';
+    
     protected $fillable = ['Beneficiary_ID', 'city', 'street', 'building', 'nature_of_housing'];
 
     public function beneficiary()

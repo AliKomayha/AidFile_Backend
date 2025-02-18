@@ -17,7 +17,7 @@ class Beneficiary extends Model
         'health_status', 'number_place_of_registration', 'nationality',
         'doctrine', 'guarantor', 'political_affiliation', 'lineage',
         'academic_level', 'blood_type', 'religious_commitment',
-        'phone_number', 'second_phone'
+        'phone_number', 'second_phone','family_status','comments'
     ];
 
     public function housing(){

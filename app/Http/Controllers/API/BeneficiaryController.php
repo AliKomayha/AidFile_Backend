@@ -6,6 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Beneficiary;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBeneficiaryRequest;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\API\WorkController;
+use App\Http\Controllers\API\HousingController;
+use App\Http\Controllers\API\WifeController;
+use App\Http\Controllers\API\ChildController;
+use App\Http\Controllers\API\PropertyController;
+
 
 class BeneficiaryController extends Controller
 {
@@ -24,10 +31,49 @@ class BeneficiaryController extends Controller
      */
     public function store(StoreBeneficiaryRequest $request)
     {
-        $beneficiary= Beneficiary::create($request->validated());
+        DB::beginTransaction();
+        try{
+            
+            $validatedData = $request->validated();
+            $beneficiary = Beneficiary::create($validatedData['beneficiary']);
+
+            if ($request->has('work')) {
+                app(WorkController::class)->store($request, $beneficiary->id);
+            }
+
+            if ($request->has('housing')) {
+                app(HousingController::class)->store($request, $beneficiary->id);
+            }
+
+            if ($request->has('wives')) {
+                app(WifeController::class)->store($request, $beneficiary->id);
+            }
+
+            if ($request->has('children')) {
+                app(ChildController::class)->store($request, $beneficiary->id);
+            }
+
+            if ($request->has('properties')) {
+                app(PropertyController::class)->store($request, $beneficiary->id);
+            }
+            
+            DB::commit();
+            
+            return response()->json([
+                'message' => 'Beneficiary created successfully',
+                'beneficiary' => $beneficiary
+            ], 201);
+            
+        }catch(\Exception $e){
+                DB::rollBack();
+                return response()->json([
+                    'error' => 'Failed to create beneficiary',
+                    'message' => $e->getMessage()
+                ], 500);
+            }
         
-        // edit the message in arabic
-        return response()->json(['message'=>'Beneficiary added successfully','data'=>$beneficiary],201);
+        
+
     }
 
     /**
@@ -45,12 +91,45 @@ class BeneficiaryController extends Controller
      */
     public function update(StoreBeneficiaryRequest $request, string $id)
     {
-        $beneficiary = Beneficiary::findOrFail($id);
-        $beneficiary->update($request->validated());
+        DB::beginTransaction();
 
-        return response()->json(['message' => 'Beneficiary updated successfully', 'data' => $beneficiary], 200);
+        try {
+            $beneficiary = Beneficiary::findOrFail($id);
+            $beneficiary->update($request->validated()['beneficiary']);
+
+            // ✅ Update related records
+            if ($request->has('work')) {
+                app(WorkController::class)->update($request, $beneficiary->id);
+            }
+
+            if ($request->has('housing')) {
+                app(HousingController::class)->update($request, $beneficiary->id);
+            }
+
+            if ($request->has('wives')) {
+                app(WifeController::class)->update($request, $beneficiary->id);
+            }
+
+            if ($request->has('children')) {
+                app(ChildController::class)->update($request, $beneficiary->id);
+            }
+
+            if ($request->has('properties')) {
+                app(PropertyController::class)->update($request, $beneficiary->id);
+            }
+
+            DB::commit();
+
+            return response()->json(['message' => 'Beneficiary updated successfully', 'data' => $beneficiary], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'error' => 'Failed to update beneficiary',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
-
     /**
      * Remove the specified resource from storage.
      */
