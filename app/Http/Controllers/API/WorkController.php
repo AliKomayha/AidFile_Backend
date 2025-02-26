@@ -21,8 +21,8 @@ class WorkController extends Controller
      */
     public function store(Request $request, $beneficiaryId)
     {
-        \Log::info("Storing work details for Beneficiary ID: " . $beneficiaryId);
-        \Log::info("Received Data: " . json_encode($request->all()));
+        // \Log::info("Storing work details for Beneficiary ID: " . $beneficiaryId);
+        // \Log::info("Received Data: " . json_encode($request->all()));
 
         $work = Work::create([
             'Beneficiary_ID' => $beneficiaryId,

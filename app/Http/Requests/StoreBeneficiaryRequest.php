@@ -13,6 +13,7 @@ class StoreBeneficiaryRequest extends FormRequest
     {
       //return in_array(auth()->user()->role, ['admin', 'master']);
       return auth()->check() && in_array(auth()->user()->role, ['admin', 'master']);
+        //return auth()->check() && in_array(auth()->user()->role, ['admin', 'master']);
     }
 
     /**

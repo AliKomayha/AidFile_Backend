@@ -81,7 +81,10 @@ class BeneficiaryController extends Controller
      */
     public function show(string $id)
     {
-        $beneficiaries=Beneficiary::findOrFail($id);
+        // $beneficiaries=Beneficiary::findOrFail($id);
+        // return response()->json($beneficiaries);
+
+        $beneficiaries=Beneficiary::with(['work','housing','wives','children','properties'])->findOrFail($id);
         return response()->json($beneficiaries);
     }
 

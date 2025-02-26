@@ -41,10 +41,11 @@ class ChildController extends Controller
                 'blood_type' => $child['blood_type']              
 
             ]);
+            }
             return response()->json([
                 'message' => 'Children added successfully'
             ], 201);
-        }
+        
     }
 
     /**
