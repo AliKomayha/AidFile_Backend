@@ -5,8 +5,9 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\AidDistribution;
-use App\Http\Requests\StoreAidDistributionRequest;
+
 use App\Http\Requests\UpdateAidDistributionRequest;
+use Illuminate\Support\Facades\Validator; 
 
 class AidDistributionController extends Controller
 {
@@ -22,12 +23,60 @@ class AidDistributionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAidDistributionRequest $request)
+    public function store(request $request)
     {
-        $aidDistribution = AidDistribution::create($request->validated());
+        $aidDistributions = [];
 
-        return response()->json(['message' => 'Aid distribution recorded successfully', 'data' => $aidDistribution], 201);
+        // Define validation rules
+        $rules = [
+            '*.Aid_ID' => ['required', 'exists:aids,id'],
+            '*.Beneficiary_ID' => ['required', 'exists:beneficiaries,id'],
+            '*.date_given' => ['required', 'date'],
+            '*.unit_value' => ['required', 'numeric'],
+            '*.amount' => ['required', 'numeric', 'min:0'],
+        ];
+
+        // Check if the request is a JSON array
+        if ($request->isJson() && is_array($request->all())) {
+            $validator = Validator::make($request->all(), $rules);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'Validation Failed',
+                    'messages' => $validator->errors()
+                ], 422);
+            }
+
+            foreach ($request->all() as $distributionData) {
+                $aidDistributions[] = AidDistribution::create($distributionData);
+            }
+        } else {
+            // Handle single request
+            $singleRules = [
+                'Aid_ID' => ['required', 'exists:aids,id'],
+                'Beneficiary_ID' => ['required', 'exists:beneficiaries,id'],
+                'date_given' => ['required', 'date'],
+                'unit_value' => ['required', 'numeric'],
+                'amount' => ['required', 'numeric', 'min:0'],
+            ];
+
+            $validator = Validator::make($request->all(), $singleRules);
+
+            // Check if validation fails
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'Validation Failed',
+                    'messages' => $validator->errors()
+                ], 422);
+            }
+
+            $aidDistributions[] = AidDistribution::create($validator->validated());
+        }
+
+        return response()->json(['message' => 'Aid distribution recorded successfully', 'data' => $aidDistributions], 201);
     }
+       
 
     /**
      * Display the specified resource.

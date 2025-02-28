@@ -23,11 +23,11 @@ class StoreAidDistributionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Aid_ID' => 'required|exists:aids,id',
-            'Beneficiary_ID' => 'required|exists:beneficiaries,id',
-            'date_given' => 'required|date',
-            'unit_value' => 'required|numeric',
-            'amount' => 'required|numeric',
+            'Aid_ID' => ['required', 'exists:aids,id'],
+            'Beneficiary_ID' => ['required', 'exists:beneficiaries,id'],
+            'date_given' => ['required', 'date'],
+            'unit_value' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

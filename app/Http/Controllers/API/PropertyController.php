@@ -45,9 +45,21 @@ class PropertyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $beneficiaryId)
     {
-        //
+        Property::where('Beneficiary_ID', $beneficiaryId)->delete();
+        
+        foreach($request->input('properties',[]) as $property){
+            Property::create([
+                'Beneficiary_ID' => $beneficiaryId,
+                'property_type' => $property['property_type'],
+                'property_value' => $property['property_value'],
+            ]);
+        }
+        return response()->json([
+            'message' => 'Properties updated successfully'
+
+        ], 201);
     }
 
     /**

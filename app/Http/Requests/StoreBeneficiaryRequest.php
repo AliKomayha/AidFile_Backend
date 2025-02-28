@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
+use Illuminate\Validation\Rule;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -44,7 +45,12 @@ class StoreBeneficiaryRequest extends FormRequest
          'beneficiary.academic_level' => 'nullable|string',
          'beneficiary.blood_type' => 'nullable|string',
          'beneficiary.religious_commitment' => 'nullable|string',
-         'beneficiary.phone_number' => 'required|string|unique:beneficiaries,phone_number',
+         //'beneficiary.phone_number' => 'required|string|unique:beneficiaries,phone_number' .$this->route('beneficiary'),
+         'beneficiary.phone_number' => [
+            'required',
+            'string',
+            Rule::unique('beneficiaries', 'phone_number')->ignore($this->route('id')),
+        ],
          'beneficiary.second_phone' => 'nullable|string',
          'beneficiary.family_status' => 'nullable|string|max:255',
          'beneficiary.comments' => 'nullable|string|max:255',

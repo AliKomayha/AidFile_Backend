@@ -48,9 +48,29 @@ class WorkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $beneficiaryId)
     {
-        //
+        $work= Work::where('Beneficiary_ID', $beneficiaryId)->first();
+
+        if($work){
+            $work->update([
+                'job_type' => $request->input('work.job_type'),
+                'contract_type' => $request->input('work.contract_type'),
+                'monthly_income' => $request->input('work.monthly_income'),
+            ]);
+        }
+        else{
+            Work::create([
+                'Beneficiary_ID' => $beneficiaryId,
+                'job_type' => $request->input('work.job_type'),
+                'contract_type' => $request->input('work.contract_type'),
+                'monthly_income' => $request->input('work.monthly_income'),
+            ]);
+        }
+        return response()->json([
+            'message' => 'Work information updated successfully'
+
+        ], 201);
     }
 
     /**

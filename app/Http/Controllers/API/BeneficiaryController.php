@@ -21,7 +21,7 @@ class BeneficiaryController extends Controller
      */
     public function index()
     {
-        $beneficiaries=Beneficiary::all();
+        $beneficiaries=Beneficiary::with(['work', 'housing', 'wives', 'children', 'properties'])->get();
         return response()->json($beneficiaries);
     }
 

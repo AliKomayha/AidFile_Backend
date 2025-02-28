@@ -47,9 +47,31 @@ class HousingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $beneficiaryId)
     {
-        //
+        $housing = Housing::where('Beneficiary_ID', $beneficiaryId)->first();
+
+        if($housing){
+            $housing->update([
+                'city' => $request->input('housing.city'),
+                'street' => $request->input('housing.street'),
+                'building' => $request->input('housing.building'),
+                'nature_of_housing' => $request->input('housing.nature_of_housing'),
+            ]);
+        }
+        else{
+            Housing::create([
+                'Beneficiary_ID' => $beneficiaryId,
+                'city' => $request->input('housing.city'),
+                'street' => $request->input('housing.street'),
+                'building' => $request->input('housing.building'),
+                'nature_of_housing' => $request->input('housing.nature_of_housing'),
+            ]);
+        }
+        return response()->json([
+            'message' => 'Housing information updated successfully',
+            'housing' => $housing
+        ], 201);
     }
 
     /**
