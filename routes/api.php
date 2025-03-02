@@ -30,6 +30,7 @@ Route::get('/beneficiaries/{id}',[BeneficiaryController::class,'show'])->middlew
 Route::put('/beneficiaries/{id}',[BeneficiaryController::class,'update'])->middleware('auth:sanctum');
 Route::delete('/beneficiaries/{id}',[BeneficiaryController::class,'destroy'])->middleware('auth:sanctum');
 
+Route::get('/aid-proc', [BeneficiaryController::class, 'aidProc'])->middleware('auth:sanctum');
 
 //auth
 Route::post('/login', [AuthController::class, 'login']);

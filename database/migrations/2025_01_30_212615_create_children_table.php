@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('Beneficiary_ID');
             $table->string('name');
-            $table->string('place_of_birth');
-            $table->date('date_of_birth');
+            $table->string('place_of_birth')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('religious_commitment')->nullable();   //الإلتزام الديني
-            $table->string('sex');
-            $table->string('resident_in_house');   //مقيم في المنزل
+            $table->string('sex')->nullable();
+            $table->string('resident_in_house')->nullable();   //مقيم في المنزل
             $table->string('academic_level')->nullable();    //المستوى التعليمي            
-            $table->string('continues_studying');       //يتابع الدراسة
+            $table->string('continues_studying')->nullable();       //يتابع الدراسة
             $table->decimal('yearly_installment', 10, 2)->nullable();   //القسط السنوي
             $table->string('type_of_work')->nullable();
             $table->decimal('monthly_income', 10, 2)->nullable();    //الدخل الشهري

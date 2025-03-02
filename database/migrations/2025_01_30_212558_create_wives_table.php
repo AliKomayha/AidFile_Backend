@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('Beneficiary_ID');
             $table->string('full_name');
-            $table->string('place_of_birth');
-            $table->date('date_of_birth');
+            $table->string('place_of_birth')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('religious_commitment')->nullable();   //الإلتزام الديني
             $table->string('doctrine')->nullable();         //المذهب
             $table->string('lineage')->nullable();          //النسب

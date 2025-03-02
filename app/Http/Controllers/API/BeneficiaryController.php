@@ -21,10 +21,33 @@ class BeneficiaryController extends Controller
      */
     public function index()
     {
-        $beneficiaries=Beneficiary::with(['work', 'housing', 'wives', 'children', 'properties'])->get();
+        $beneficiaries=Beneficiary::with(['work', 'housing', 'wives', 'children', 'properties','aidDistributions'])->get();
         return response()->json($beneficiaries);
     }
 
+    public function aidProc(){
+        $beneficiaries = Beneficiary::with(['work', 'housing', 'aidDistributions'])
+        ->get()
+        ->map(function ($beneficiary) {
+            return [
+                'id' => $beneficiary->id,
+                'name' => $beneficiary->name,
+                'father_name' => $beneficiary->father_name,
+                'lastname' => $beneficiary->lastname,
+                'phone_number' => $beneficiary->phone_number,
+                'mothers_name' => $beneficiary->mothers_name,
+                'social_status' => $beneficiary->social_status,
+                'family_situation' => $beneficiary->family_situation,
+                'family_status' => $beneficiary->family_status,
+                'job_type' => $beneficiary->work?->job_type ?? "غير متوفر",
+                'street' => $beneficiary->housing?->street ?? "غير متوفر",
+                'total_aids' => $beneficiary->aidDistributions->count(), // ✅ Total aids received
+                'last_aid_date' => $beneficiary->aidDistributions->max('date_given') ?? "لم يستلم", // ✅ Last received aid date
+            ];
+        });
+
+    return response()->json($beneficiaries);
+    }
    
     /**
      * Store a newly created resource in storage.
@@ -71,8 +94,6 @@ class BeneficiaryController extends Controller
                     'message' => $e->getMessage()
                 ], 500);
             }
-        
-        
 
     }
 
@@ -84,7 +105,7 @@ class BeneficiaryController extends Controller
         // $beneficiaries=Beneficiary::findOrFail($id);
         // return response()->json($beneficiaries);
 
-        $beneficiaries=Beneficiary::with(['work','housing','wives','children','properties'])->findOrFail($id);
+        $beneficiaries=Beneficiary::with(['work','housing','wives','children','properties','aidDistributions.aid'])->findOrFail($id);
         return response()->json($beneficiaries);
     }
 

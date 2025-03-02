@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('work', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('Beneficiary_ID');
-            $table->string('job_type');
-            $table->string('contract_type');
-            $table->decimal('monthly_income', 10, 2);
+            $table->string('job_type')->nullable();
+            $table->string('contract_type')->nullable();
+            $table->decimal('monthly_income', 10, 2)->nullable();
 
             $table->timestamps();
 

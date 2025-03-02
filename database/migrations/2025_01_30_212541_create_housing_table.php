@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('Beneficiary_ID');
             $table->string('city');
             $table->string('street');
-            $table->string('building');
-            $table->string('nature_of_housing'); //طبيعة الاشغال
+            $table->string('building')->nullable();
+            $table->string('nature_of_housing')->nullable(); //طبيعة الاشغال
             $table->timestamps();
 
             $table->foreign('Beneficiary_ID')->references('id')->on('beneficiaries')->onDelete('cascade');
