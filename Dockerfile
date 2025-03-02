@@ -25,8 +25,5 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose the application port
-EXPOSE 80
-
-# Start Laravel app
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# Run migrations only if the database is empty
+CMD php artisan migrate --force || true && php artisan serve --host=0.0.0.0 --port=8000
